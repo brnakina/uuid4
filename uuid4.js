@@ -1,30 +1,17 @@
 function uuid4(){
-	var i, len, j, lenj, pointer = 0, random = [], block = "", blocks = [], uuidFormat = [8,4,4,4,12];
-	for(i = 0; i < 32; i += 1){
-		random.push(getRandom(i));
-	}
-	for(i = 0, len = uuidFormat.length; i < len; i += 1){
-		block = "";
-		for(j = 0; j < uuidFormat[i]; j += 1){
-			block += random[pointer++];
-		}
-		blocks.push(block);
-	}
-	return blocks.join('-');
-
-	function getRandom(i){
-		var ret;
+	return [...new Array(36)].map((_,i) => {
 		switch(i){
-			case 12:
-			ret = 4;
-			break;
-			case 16:
-			ret = parseInt(Math.random() * 4 + 8, 10).toString(16);
-			break;
+			case 8:
+			case 13:
+			case 18:
+			case 23:
+				return '-';
+			case 14:
+				return '4';
+			case 19:
+				return parseInt(Math.random() * 4 + 8, 10).toString(16);
 			default:
-			ret = parseInt(Math.random() * 16, 10).toString(16);
-			break; 
+				return parseInt(Math.random() * 16).toString(16);
 		}
-		return ret;
-	}
+	}).join("");
 }
